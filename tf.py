@@ -5,16 +5,20 @@ import pprint
 def treeFormation(rootName):
 
  
-    adj=[
-     [0,0,0,0,0,0,0,0,0],
-     [0,0,1,0,0,2,0,0,0],
-     [0,0,0,1,0,0,0,0,2],
-     [0,1,0,0,2,0,0,0,0],
-     [0,2,0,0,0,0,0,1,0],
-     [0,0,0,0,1,0,0,2,0],
-     [0,0,1,2,0,0,0,0,0],
-     [0,0,0,0,0,0,1,0,2],
-     [0,0,0,0,0,2,1,0,0]
+    adj=[ 
+     [0,0,0,0,0,0,0,0,0,0,0,0,0],
+     [0,0,3,0,2,0,0,0,1,0,0,0,0],
+     [0,1,0,2,0,3,0,0,0,0,0,0,0],
+     [0,0,3,0,1,0,2,0,0,0,0,0,0],
+     [0,0,0,1,0,0,0,3,0,0,0,0,2],
+     [0,0,1,0,0,0,1,0,0,3,0,0,0],
+     [0,0,0,1,0,3,0,2,0,0,0,0,0],
+     [0,0,0,0,2,0,1,0,0,0,0,0,3],
+     [0,1,0,0,0,0,0,0,0,2,3,0,0],
+     [0,0,0,0,0,1,0,0,3,0,0,2,0],
+     [0,1,0,0,0,0,0,0,2,0,0,3,0],
+     [0,0,0,0,0,0,0,0,0,1,3,0,2],
+     [0,0,0,0,0,1,0,0,0,0,3,2,0],
      ]
 
 
@@ -23,14 +27,14 @@ def treeFormation(rootName):
     r=currNode
     r.tree(currNode)
     r.rv=rootName
-    flag=[0]*9
+    flag=[0]*13
     counter=0
-    while(sum(flag)!=16):
+    while(sum(flag)!=36):
         counter+=1
         cn=currNode.get()
-        if flag[cn]<2:
+        if flag[cn]<3:
 
-            for j in range(1,9):
+            for j in range(1,13):
                 if adj[cn][j]==flag[cn]+1:
                    flag[cn]+=1
 
@@ -38,10 +42,10 @@ def treeFormation(rootName):
                       child=treeNode(j,currNode)
                       currNode.addnode(child)
                       temp=currNode.getchildren()
+                      print("children",temp,"of",cn,currNode)
                       currNode=temp[len(temp)-1]    
                       
-                      
-                   else:
+                   else :
                       child=treeNode(j,currNode)
                       currNode.addnode(child)
                    break
@@ -50,7 +54,7 @@ def treeFormation(rootName):
     return r #returns the root
 
 def cycles(r,gr):
-    count=[0]*9
+    count=[0]*13
     path=[]
     index=[]
     stack=[]
@@ -79,7 +83,7 @@ def cycles(r,gr):
     #determining remaining paths
     flag1=0
     while True:
-          while stack[len(stack)-1]==2:
+          while stack[len(stack)-1]==3:
               stack.pop()
               path.pop()
               index.pop()
@@ -122,7 +126,7 @@ def cycles(r,gr):
  #Determine no loop paths from node 1->2,3,...n & 2->1,3,4,..n & 3->1,2,4,.. n-1
 ## for i in range(1,2):
 def paths(r,gr): 
- for j in range(1,9):
+ for j in range(1,13):
                 if r.cnode!=j:
                    stack=[] #python equivalent here
                    path=[]
@@ -146,7 +150,7 @@ def paths(r,gr):
                    #Determining remaining paths
                    while True:
                      flag1=0
-                     while stack[len(stack)-1]==2:
+                     while stack[len(stack)-1]==3:
                                  stack.pop()
                                  path.pop()
                                  index.pop()
@@ -186,9 +190,9 @@ def paths(r,gr):
                           cp(r,gr,j,path)
 def graph():
     gr=defaultdict(list)
-    for key in range(1,9):
+    for key in range(1,13):
         gr[key]={}
-        for k in range(1,9):
+        for k in range(1,13):
             gr[key][k]=[]
     return gr
 

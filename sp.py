@@ -10,7 +10,7 @@ def sP(r,gr):
            c=gr[key][key] #list of cycles of key
            for i in range(0,len(c)):
                cycle=c[i] #taking cycles of key one by one
-               for j in range(1,9):
+               for j in range(1,13):
                    if j!=key: #since we're only considering paths here
                         p=gr[j][key] #list of all paths from j to key
                         for m in range(0,len(p)):
@@ -47,34 +47,48 @@ def sP(r,gr):
          print(synchronising[z],"\n")
     print("shortest synchronising path",min(synchronising,key=len))
 
+##    ch1=['B','B','R','B','B','R','B','B','R','B']
+##    ch2=['B','R','R','B','R','R','B','R','R']
+##    NOch3=['B','B','R','B','B','R','R','B','R','R','R']
+##    ch4=['B','B','R','B','B','R','B','B','R']
+##    NOch5=['R','B','B','R','B','B','R','B','B']
+##    NOch6=['B','R','B','R','B','R','R','B','R']
+##    NOch7=['B','B','B','R','B','B','R','B','B','R','R']
+##    Noch8=['R','R','B','R','R','B','R','R','B']
+##    if ch in synchronising:
+##        print("YEAH!")
 
 #checking whether the concatenated path+cycle is synchronising
 def syncP(pc):
     fv=pc[len(pc)-1]
     synchronisingP=[]
     setseq=[]
-    adj=[
-     [0,0,0,0,0,0,0,0,0],
-     [0,0,1,0,0,2,0,0,0],
-     [0,0,0,1,0,0,0,0,2],
-     [0,1,0,0,2,0,0,0,0],
-     [0,2,0,0,0,0,0,1,0],
-     [0,0,0,0,1,0,0,2,0],
-     [0,0,1,2,0,0,0,0,0],
-     [0,0,0,0,0,0,1,0,2],
-     [0,0,0,0,0,2,1,0,0]
+    adj=[ 
+     [0,0,0,0,0,0,0,0,0,0,0,0,0],
+     [0,0,3,0,2,0,0,0,1,0,0,0,0],
+     [0,1,0,2,0,3,0,0,0,0,0,0,0],
+     [0,0,3,0,1,0,2,0,0,0,0,0,0],
+     [0,0,0,1,0,0,0,3,0,0,0,0,2],
+     [0,0,1,0,0,0,1,0,0,3,0,0,0],
+     [0,0,0,1,0,3,0,2,0,0,0,0,0],
+     [0,0,0,0,2,0,1,0,0,0,0,0,3],
+     [0,1,0,0,0,0,0,0,0,2,3,0,0],
+     [0,0,0,0,0,1,0,0,3,0,0,2,0],
+     [0,1,0,0,0,0,0,0,2,0,0,3,0],
+     [0,0,0,0,0,0,0,0,0,1,3,0,2],
+     [0,0,0,0,0,1,0,0,0,0,3,2,0],
      ]
     seq=color(pc)
     flag=1
     #checking whether all vertices (except r) following the same color sequence reach r
-    for i in range(1,9): #origin vertex
+    for i in range(1,13): #origin vertex
       if i!=fv:
         v=i
         counter=0
         pathF=[]
         pathF.append(v)
         while counter<len(seq):
-                      for m in range(1,9):#column number
+                      for m in range(1,13):#column number
                              if seq[counter]=='R':
                                 if adj[v][m]==1:
                                   pathF.append(m)
@@ -83,6 +97,13 @@ def syncP(pc):
                                   break
                              elif seq[counter]=='B':
                                 if adj[v][m]==2:
+                                  pathF.append(m)
+                                  v=m
+                                  counter+=1
+                                  break
+                            
+                             elif seq[counter]=='G':
+                                if adj[v][m]==3:
                                   pathF.append(m)
                                   v=m
                                   counter+=1
@@ -101,17 +122,23 @@ def syncP(pc):
 
 #assign colors to the path from adj
 def color(pc):
-    adj=[
-     [0,0,0,0,0,0,0,0,0],
-     [0,0,1,0,0,2,0,0,0],
-     [0,0,0,1,0,0,0,0,2],
-     [0,1,0,0,2,0,0,0,0],
-     [0,2,0,0,0,0,0,1,0],
-     [0,0,0,0,1,0,0,2,0],
-     [0,0,1,2,0,0,0,0,0],
-     [0,0,0,0,0,0,1,0,2],
-     [0,0,0,0,0,2,1,0,0]
+    adj=[ 
+     [0,0,0,0,0,0,0,0,0,0,0,0,0],
+     [0,0,3,0,2,0,0,0,1,0,0,0,0],
+     [0,1,0,2,0,3,0,0,0,0,0,0,0],
+     [0,0,3,0,1,0,2,0,0,0,0,0,0],
+     [0,0,0,1,0,0,0,3,0,0,0,0,2],
+     [0,0,1,0,0,0,1,0,0,3,0,0,0],
+     [0,0,0,1,0,3,0,2,0,0,0,0,0],
+     [0,0,0,0,2,0,1,0,0,0,0,0,3],
+     [0,1,0,0,0,0,0,0,0,2,3,0,0],
+     [0,0,0,0,0,1,0,0,3,0,0,2,0],
+     [0,1,0,0,0,0,0,0,2,0,0,3,0],
+     [0,0,0,0,0,0,0,0,0,1,3,0,2],
+     [0,0,0,0,0,1,0,0,0,0,3,2,0],
      ]
+    
+    
     seq=[]
     for m in range(0,len(pc)-1):
         v1=pc[m]
@@ -120,6 +147,8 @@ def color(pc):
             seq+='R'
         elif adj[int(v1)][int(v2)]==2:
             seq+='B'
+        elif adj[int(v1)][int(v2)]==3:
+            seq+='G'
     return seq
     
 
@@ -127,21 +156,21 @@ def main():
     print("Take input of AGW graph as adjacency matrix")
 ##    print("Tree Formation")
     gr=graph()
-    for i in range(1,9):
+    for i in range(1,13):
         rootName=i
-##        print("Printing root-leaf paths for tree",rootName)
+        print("Printing root-leaf paths for tree",rootName)
         rootNode=treeFormation(rootName)
         r=rootNode
-##        print("Tree Paths")
+        print("Tree Paths")
         l=rootNode.treePaths(rootNode)
         r.rtlpaths=l
-##        print(r.rtlpaths)
-        r.counter(r,r)  
-        cycles(r,gr)
-        paths(r,gr)
+        print(r.rtlpaths)
+##        r.counter(r,r)  
+##        cycles(r,gr)
+##        paths(r,gr)
 ##    pprint.pprint(gr)
-    for j in range(1,9):
-        sP(j,gr)
-		
+##    for j in range(1,9):
+##        sP(j,gr)
+##    print(color(['1','2','2','3','1','2']))
 if __name__=="__main__":
     main()
