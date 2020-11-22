@@ -1,3 +1,6 @@
 # The Road Coloring Problem
 
-I carried out this project to first read the paper, 'The Road Coloring Problem' conjectured by  Roy Adler and Benjamin Weiss (1970) and proved by Avraham Trahtman(2009) and then wrote a real life application for it by taking the the roads around campus as edges and several landmarks as nodes. The problem deals with finding the synchronising coloring for a particular type of graph, such that no matter which node on the graph you start from , you shall always reach the same destination if you follow the coloring.   
+As a project in the Professor Nagpaul Fellowship, I presented a paper on the ['The Road Coloring Problem'](https://en.wikipedia.org/wiki/Road_coloring_theorem) conjectured by  Roy Adler and Benjamin Weiss (1970) and proved by Avraham Trahtman(2009).   
+
+The aim of this project was to undertand the Road Coloring Theorem, recreate the paper, present it in an accessible manner with a python implementation.
+The real life application of the project was to take the the roads around campus as edges and several landmarks as nodes. The problem deals with finding the synchronising coloring for a graph following certain properties, such that no matter which node on the graph you start from , you shall always reach the same destination if you follow the coloring.
